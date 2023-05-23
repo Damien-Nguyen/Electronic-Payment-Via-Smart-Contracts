@@ -4,7 +4,7 @@ Development of Electronic Payment System Using Smart Contract
 
 ## Goal
 
-The project team work together to develop a paymwent smart contractor to facilitate each transaction of money transfer;
+The project team work together to develop a paymwent smart contract to facilitate each transaction of money transfer;
 
 ## Functions of Product
 
