@@ -40,3 +40,13 @@ API:
 
 * Ganache
 * Remix
+
+## Implementation Steps
+
+* Establish the parties for the transactions. We set up two parties for each trasnaction contract. One is the seller, the other is the buyer. 
+
+* The contract needs to have gas fee and charge fee for each transaction.
+
+* The contract needs to allow both buyer and seller to enter their wallet accoutn address for transferrign or saving money.
+
+* The transation will be conducted by using stable coins, digital currency or cryptocurrency which we can develop. 
