@@ -15,7 +15,7 @@ contract DLJ_token is ERC20, ERC20Detailed {
     uint256 eth_DLJ_rate = 2910;
     uint256 aud_DLJ_rate = 1;
 
-    function Transfer_Ether(uint amount, address payable recipient) public {
+    function transferEther(uint amount, address payable recipient) public {
         recipient.transfer(amount);
         accountBalance = address(this).balance;
     }    
@@ -30,11 +30,11 @@ contract DLJ_token is ERC20, ERC20Detailed {
         _mint(buyer_account, initial_supply);
     }
 
-    function Transfer_DLJ(address recipient, uint amount) public onlyOwner{
+    function mintDLJ(address recipient, uint amount) public onlyOwner{
         _mint(recipient, amount);
     }
 
-    function Deposit_Ether() public payable{}
+    function depositEther() public payable{}
     function() external payable{}
 
 
