@@ -47,23 +47,38 @@ contract = load_contract()
 accounts = w3.eth.accounts
 account = accounts[0]
 # Select or enter a recipient address using a Streamlit component
-receiver_account = st.text_input("receiver public address")
+receiver_account = st.text_input("DLJ Token Buyer Public Address")
 # Enter a text string for the token or link to digital location
-payment_details = st.text_input("Trading Details", value="Quantity of Tokens")
-if st.button("Transfer Token"):
+token_purchased_amount = st.text_input("Token Purchase Quantity", value="Quantity of Tokens")
+token_purchase_name = st.text_input("DLJ Token Purchaser Name")
+if st.button ("Transfer Token"):
     # Call the awardCertificate function with web3
-    contract.functions.awardCertificate(receiver_account, trading_details).transact({"from":account, "gas": 1000000})
+    contract.functions.mintDLJ(receiver_account, token_purchased_amount).transact({"from":account, "gas": 1000000})
     transact({'from': account, 'gas': 10})
+
+# Pay to Others
+
+recipient_account = st.text_input("Recipient Public Address")
+ether_transfer_amount=st.text_input("Ether Quantiy")
+recipient_name = st.text_input("Ether Recipient Name")
+if st.button ("Transfer Ether"):
+    contract.functions.transferEther(recipient_account, ether_transfer_amount).transact({"from":account, "gas":1000000})
 
 ################################################################################
 # Display Receiver
 ################################################################################
-receiver_address = st.writer(receiver_account)
+
 # @TODO: YOUR CODE HERE!
-if st.button("Display Receiver"):
+if st.button("Display Token Receiver"):
     # Get the receiver
-    receiver = contract.functions.ownerof(receiver_id).call()
-    st.write(f"The token was transferred to {receiver}")
-    # Get the receiver's URI
-    receiver_uri = contract.functions.tokenURI(receiver_id).call()
-    st.write(f"The receiver's tokenURI metadata is {receiver_uri}")
+    st.write(f"The token was transferred to {token_purchase_name}")
+    st.write(f"Transferred Token Quantity is {token_purchased_amount}")
+    # Get the receiver's address
+    st.write(f"The token receiver's address is {receiver_account}")
+
+if st.button("Display Ether Recipient"):
+    # Get the recipient
+    st.write(f"The Ether was transferred to {recipient_name}")
+    st.write(f"Transferred Ether Quantity is {ether_transfer_amount}")
+    # Get the recipient's address
+    st.write(f"The Ether recipient's public address is {recipient_account}")
