@@ -7,31 +7,43 @@ contract DLJ_token is ERC20, ERC20Detailed {
     string coin = "DLJ";
     uint price;
     bool is_buy_order;
-    address payable public buyer_account = 0x43701789562E7DE833C1f718DfBe5f7DDaaee77B;
-    address payable seller_account = 0x33061519E0A83DE0d3B58E74F3e3e88cAF61a251;
+    address payable public owner;
     uint public accountBalance;
     string account_holder = "Damien Nguyen";
+    uint32 password = 123;
     uint32 eth_aud_rate = 2910;
     uint256 eth_DLJ_rate = 2910;
     uint256 aud_DLJ_rate = 1;
+    uint32 input;
 
-    function transferEther(uint amount, address payable recipient) public {
-        recipient.transfer(amount);
-        accountBalance = address(this).balance;
-    }    
+    constructor (uint initial_supply) ERC20Detailed ("DLJ_token", "DLJ", 18) public{
+        owner=msg.sender;
+        _mint(owner, initial_supply);
+    }
+
+       
+
+    function getPassword(uint32 input_number) public returns(uint32) {
+        
+        return input = input_number;
+        
+    }
 
     modifier onlyOwner {
-        require(msg.sender == buyer_account, "You do not have permission to mint these tokens!");
+
+        require(input == password, "You do not have permission to mint these tokens!");
         _;
     }
 
-    constructor (uint initial_supply) ERC20Detailed ("DLJ_token", "DLJ", 18) public{
-        buyer_account=msg.sender;
-        _mint(buyer_account, initial_supply);
-    }
+
 
     function mintDLJ(address recipient, uint amount) public onlyOwner{
         _mint(recipient, amount);
+    }
+
+    function transferEther(uint amount, address payable recipient) public onlyOwner{
+        recipient.transfer(amount);
+        accountBalance = address(this).balance;
     }
 
     function depositEther() public payable{}

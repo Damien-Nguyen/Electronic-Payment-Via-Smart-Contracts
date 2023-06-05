@@ -47,25 +47,29 @@ contract = load_contract()
 accounts = w3.eth.accounts
 account = accounts[0]
 # Select or enter a recipient address using a Streamlit component
-st.markdown("## DLJ Token Mint")
+st.markdown("## Input Password Before Transaction")
+password = st.number_input("Login Password")
+# Mint DLJ Token For Customers
+st.markdown("# DLJ Token Mint")
 receiver_account = st.text_input("DLJ Token Buyer Public Address")
-# Enter a text string for the token or link to digital location
-token_purchased_amount = st.text_input("Token Purchase Quantity", value="Quantity of Tokens")
+token_purchased_amount = st.number_input("Token Purchase Quantity")
 token_purchase_name = st.text_input("DLJ Token Purchaser Name")
 
 if st.button ("Transfer Token"):
-    # Call the awardCertificate function with web3
-    contract.functions.mintDLJ(receiver_account, token_purchased_amount).transact({"from":account, "gas": 1000000})
+    # Call the getPassword and MintDLJ functions with web3
+    contract.functions.getPassword(int(password)).transact({"from":account, "gas":1000000})
+    contract.functions.mintDLJ(receiver_account, int(token_purchased_amount)).transact({"from":account, "gas": 1000000})
     
 
-# Pay to Others
-st.markdown("## Ether Transfer")
+# Pay Ether to Merchants
+st.markdown("# Ether Transfer")
 recipient_account = st.text_input("Recipient Public Address")
-ether_transfer_amount=st.text_input("Ether Quantiy", value="Quantity of Ether")
+ether_transfer_amount=st.number_input("Ether Quantity")
 recipient_name = st.text_input("Ether Recipient Name")
 
 if st.button ("Transfer Ether"):
-    contract.functions.transferEther(recipient_account, ether_transfer_amount).transact({"from":account, "gas":1000000})
+    contract.functions.getPassword(int(password)).transact({"from":account, "gas":1000000})
+    contract.functions.transferEther(int(ether_transfer_amount), recipient_account).transact({"from":account, "gas":1000000})
 
 ################################################################################
 # Display Receiver
