@@ -20,9 +20,9 @@ w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
 @st.cache_resource()
 def load_contract():
 
-    # Load Art Gallery ABI
-    with open(Path("./contracts/compiled/certificate_abi.json")) as f:
-        certificate_abi=json.load(f)
+    # Load Transaction ABI
+    with open(Path("./contracts/compiled/transaction.json")) as f:
+        contract_abi=json.load(f)
 
     # Set the contract address (this is the address of the deployed contract)
     contract_address = os.getenv("SMART_CONTRACT_ADDRESS")
@@ -30,7 +30,7 @@ def load_contract():
     # Get the contract using web3
     contract = w3.eth.contract(
         address=contract_address,
-        abi=certificate_abi
+        abi=contract_abi
     )
 
     return contract
@@ -41,29 +41,29 @@ contract = load_contract()
 
 
 ################################################################################
-# Award Certificate
+# Transfer Token
 ################################################################################
 
 accounts = w3.eth.accounts
 account = accounts[0]
 # Select or enter a recipient address using a Streamlit component
-student_account = st.selectbox("Select Account", options=accounts)
-# Enter a text string for the certificate or link to digital certificate location
-certificate_details = st.text_input("Certificate Details", value="Fintech Certificate of Completion")
-if st.button("Award Certificate"):
+receiver_account = st.text_input("receiver public address")
+# Enter a text string for the token or link to digital location
+payment_details = st.text_input("Trading Details", value="Quantity of Tokens")
+if st.button("Transfer Token"):
     # Call the awardCertificate function with web3
-    contract.functions.awardCertificate(student_account, certificate_details).transact({"from":account, "gas": 1000000})
+    contract.functions.awardCertificate(receiver_account, trading_details).transact({"from":account, "gas": 1000000})
     transact({'from': account, 'gas': 10})
 
 ################################################################################
-# Display Certificate
+# Display Receiver
 ################################################################################
-certificate_id = st.number_input("Enter a Certificate Token ID to display", value=0, step=1)
+receiver_address = st.writer(receiver_account)
 # @TODO: YOUR CODE HERE!
-if st.button("Display Certificate"):
-    # Get the certificate owner
-    certificate_owner = contract.functions.ownerof(certificate_id).call()
-    st.write(f"The certificate was awarded to {certificate_owner}")
-    # Get the certificate's URI
-    certificate_uri = contract.functions.tokenURI(certificate_id).call()
-    st.write(f"The certificate's tokenURI metadata is {certificate_uri}")
+if st.button("Display Receiver"):
+    # Get the receiver
+    receiver = contract.functions.ownerof(receiver_id).call()
+    st.write(f"The token was transferred to {receiver}")
+    # Get the receiver's URI
+    receiver_uri = contract.functions.tokenURI(receiver_id).call()
+    st.write(f"The receiver's tokenURI metadata is {receiver_uri}")
