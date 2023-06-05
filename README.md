@@ -50,3 +50,12 @@ API:
 * The contract needs to allow both buyer and seller to enter their wallet accoutn address for transferrign or saving money.
 
 * The transation will be conducted by using stable coins, digital currency or cryptocurrency which we can develop. 
+
+*
+
+## Dashboard for AUD_Pegged Token
+
+* Given we are using a token that is pegged to the AUD, we felt it was appropiate to display the real-time conversion rates across other currencies for the AUD.
+* This is also a useful additional given the conversion rate we are using int he smart contract is static.
+
+![Photos/Screen Shot 2023-06-05 at 8.24.30 pm.png](https://github.com/Explictz/Project-3/blob/main/Photos/Screen%20Shot%202023-06-05%20at%208.24.30%20pm.png)
