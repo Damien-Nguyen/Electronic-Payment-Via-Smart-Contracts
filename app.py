@@ -21,7 +21,7 @@ w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
 def load_contract():
 
     # Load Transaction ABI
-    with open(Path("./contracts/compiled/transaction.json")) as f:
+    with open(Path("./contracts/compiled/transaction_abi.json")) as f:
         contract_abi=json.load(f)
 
     # Set the contract address (this is the address of the deployed contract)
@@ -47,27 +47,30 @@ contract = load_contract()
 accounts = w3.eth.accounts
 account = accounts[0]
 # Select or enter a recipient address using a Streamlit component
+st.markdown("## DLJ Token Mint")
 receiver_account = st.text_input("DLJ Token Buyer Public Address")
 # Enter a text string for the token or link to digital location
 token_purchased_amount = st.text_input("Token Purchase Quantity", value="Quantity of Tokens")
 token_purchase_name = st.text_input("DLJ Token Purchaser Name")
+
 if st.button ("Transfer Token"):
     # Call the awardCertificate function with web3
     contract.functions.mintDLJ(receiver_account, token_purchased_amount).transact({"from":account, "gas": 1000000})
-    transact({'from': account, 'gas': 10})
+    
 
 # Pay to Others
-
+st.markdown("## Ether Transfer")
 recipient_account = st.text_input("Recipient Public Address")
-ether_transfer_amount=st.text_input("Ether Quantiy")
+ether_transfer_amount=st.text_input("Ether Quantiy", value="Quantity of Ether")
 recipient_name = st.text_input("Ether Recipient Name")
+
 if st.button ("Transfer Ether"):
     contract.functions.transferEther(recipient_account, ether_transfer_amount).transact({"from":account, "gas":1000000})
 
 ################################################################################
 # Display Receiver
 ################################################################################
-
+st.markdown("## Display DLJ Receiver and Ether Recipient")
 # @TODO: YOUR CODE HERE!
 if st.button("Display Token Receiver"):
     # Get the receiver
