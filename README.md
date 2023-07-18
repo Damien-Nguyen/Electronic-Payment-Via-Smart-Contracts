@@ -1,4 +1,4 @@
-# Project-3
+# Electronic Payments Via Smart Contracts 
 
 Development of Electronic Payment System Using Smart Contract
 
