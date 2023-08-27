@@ -1,5 +1,5 @@
 # Electronic Payments Via Smart Contracts 
-![Photos/istockphoto-1266975549-612x612.jpg]
+![Photos/istockphoto-1266975549-612x612.png]
 Development of Electronic Payment System Using Smart Contract
 
 ## Goal
